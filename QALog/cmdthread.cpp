@@ -20,42 +20,28 @@ void CmdThread::run()
     // 返回读取：https://blog.csdn.net/weixin_43246170/article/details/115866322
     QProcess myProcess;
     myProcess.start(this->cmd, this->params);
-    //    myProcess.closeReadChannel(QProcess::StandardOutput);
-    //    myProcess.closeReadChannel(QProcess::StandardError);
-    //    myProcess.closeWriteChannel();
 
-    if(myProcess.waitForStarted())
-    {
+    if(myProcess.waitForStarted()){
         qDebug()<<"启动成功";
     }
-    else
-    {
+    else{
         qDebug()<<"启动失败 error:"<<myProcess.errorString();
-                                         return;
+        return;
     }
-    int count =0;
+
     // Loop for query
     while(!myProcess.waitForFinished(100))
     {
-        auto ret = myProcess.readAll();
-        if(ret.isEmpty()){
+        auto bytes = myProcess.readAll();
+        if(bytes.isEmpty()){
             continue;
         }
-        QDateTime current_date_time =QDateTime::currentDateTime();
-        QString current_date =current_date_time.toString("yyyy.MM.dd hh:mm:ss");
-        auto res = current_date + ":\t" +QString::fromLocal8Bit(ret);
-        qDebug()<<res;
-        emit dataSend(res);
-
+        emit dataSend(QString::fromLocal8Bit(bytes));
     }
     // Read last
-    auto ret = myProcess.readAll();
-    if(!ret.isEmpty()){
-        QDateTime current_date_time =QDateTime::currentDateTime();
-        QString current_date =current_date_time.toString("yyyy.MM.dd hh:mm:ss");
-        auto res = current_date + ":\t" +QString::fromLocal8Bit(ret);
-        qDebug()<<res;
-        emit dataSend(res);
+    auto bytes = myProcess.readAll();
+    if(!bytes.isEmpty()){
+        emit dataSend(QString::fromLocal8Bit(bytes));
     }
 
 }
