@@ -34,6 +34,8 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::onShowChange(QString str)
 {
+    // appendPlainText append the end, but will auto add new line;
+    ui->plainTextEdit->moveCursor(QTextCursor::End);
     ui->plainTextEdit->insertPlainText(str);
 }
 
