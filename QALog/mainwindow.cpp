@@ -34,8 +34,7 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::onShowChange(QString str)
 {
-    ui->plainTextEdit->appendPlainText(str);
-
+    ui->plainTextEdit->insertPlainText(str);
 }
 
 
@@ -45,5 +44,6 @@ void MainWindow::on_pushButton_4_clicked()
         workThread->terminate();
         workThread->wait();
     }
+    ui->plainTextEdit->clear();
 }
 

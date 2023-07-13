@@ -22,10 +22,10 @@ void CmdThread::run()
     myProcess.start(this->cmd, this->params);
 
     if(myProcess.waitForStarted()){
-        qDebug()<<"启动成功";
+        emit dataSend("启动成功");
     }
     else{
-        qDebug()<<"启动失败 error:"<<myProcess.errorString();
+        emit dataSend(QString("启动失败 error:" + myProcess.errorString()));
         return;
     }
 
@@ -36,7 +36,8 @@ void CmdThread::run()
         if(bytes.isEmpty()){
             continue;
         }
-        emit dataSend(QString::fromLocal8Bit(bytes));
+        auto res = QString::fromLocal8Bit(bytes);
+        emit dataSend(res);
     }
     // Read last
     auto bytes = myProcess.readAll();
