@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "cmdthread.h"
+
 #include <QMainWindow>
 
 namespace Ui {
@@ -17,6 +19,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    CmdThread *workThread;
+
 };
 
 #endif // MAINWINDOW_H

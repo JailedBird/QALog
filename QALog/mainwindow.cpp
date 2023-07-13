@@ -12,12 +12,14 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    workThread = new WorkThread();
     // set tool bar
     ui->setupUi(this);
     // 确保Spliter可以有效缩放
     setCentralWidget(ui->splitter);
     ui->splitter->setStretchFactor(0,1);
     ui->splitter->setStretchFactor(1,5);
+
 
 
 //    auto splitter = new QSplitter(Qt::Horizontal);
